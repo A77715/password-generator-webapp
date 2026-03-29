@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Password Generator</title>
+
+<style>
+body {
+    background-color: #b0e0e6; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+#main {
+    background-color: white;
+    padding: 20px;
+    width: 300px;
+    border: 1px solid black;
+    border-radius: 8px;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+input[type="number"], input[type="text"] {
+    width: 90%;
+    padding: 8px;
+    margin: 8px 0;
+    border-radius: 5px;
+    border: 1px solid #888;
+    text-align: center;
+}
+
+label {
+    display: block;
+    margin: 5px 0;
+}
+
+button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #20b2aa;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #3cb371;
+}
+
+#output {
+    margin-top: 10px;
+    padding: 8px;
+    width: 90%;
+    border: 1px solid #888;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    background-color: #f0f8ff;
+}
+</style>
+</head>
+
+<body>
+
+<div id="main">
+    <h1>Password Generator</h1>
+
+    <input type="number" id="length" placeholder="Password Length (1-20)">
+
+    <label><input type="checkbox" id="upper"> Uppercase Letters</label>
+    <label><input type="checkbox" id="lower"> Lowercase Letters</label>
+    <label><input type="checkbox" id="number"> Numbers</label>
+    <label><input type="checkbox" id="special"> Special Characters</label>
+
+    <button onclick="generate_password()">Generate Password</button>
+
+    <input type="text" id="output" placeholder="Generated Password">
+</div>
+
+<script>
+function generate_password(){
+    let length = document.getElementById("length").value
+    let upper = document.getElementById("upper").checked
+    let lower = document.getElementById("lower").checked
+    let number = document.getElementById("number").checked
+    let special = document.getElementById("special").checked
+
+    if(!upper && !lower && !number && !special){
+        alert("Please select at least one option")
+        return
+    }
+
+    if(length < 1 || length > 20){
+        alert("Password length must be between 1 and 20")
+        return
+    }
+
+    let characters = ""
+    if(upper) characters += "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    if(lower) characters += "abcdefghijklmnopqrstuvwxyz"
+    if(number) characters += "0123456789"
+    if(special) characters += "!@#$%^&*()_+"
+
+    let password = ""
+    for(let i=0;i<length;i++){
+        let randomIndex = Math.floor(Math.random()*characters.length)
+        password += characters[randomIndex]
+    }
+
+    document.getElementById("output").value = password
+}
+</script>
+
+</body>
+</html>
